@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
-//import { configService } from './config/config.service';
 import { UserModule } from "./user/user.module";
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserEntity } from './user/_infrastructure/user.entity';
+import { CoreModule } from "./_core/core.module";
 
 @Module({
-  imports: [ConfigModule.forRoot(),
+  imports: [
+    CoreModule,
+    ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: 'postgres',
@@ -16,7 +18,7 @@ import { UserEntity } from './user/_infrastructure/user.entity';
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DATABASE,
         entities: [
-          UserEntity
+          UserEntity,
         ],
         synchronize: true
       })

@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e
 
 SERVER="my_database_server";

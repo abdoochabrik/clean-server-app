@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:14.6
+    container_name: my_postgres_container
+    networks:
+      - appnet
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - clean-api-data:/var/lib/postgresql
+
+  adminer:
+    image: adminer:latest
+    container_name: my_adminer_client
+    restart: always
+    networks:
+      - appnet
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+
+networks:
+  appnet:
+
+volumes:
+  clean-api-data:
