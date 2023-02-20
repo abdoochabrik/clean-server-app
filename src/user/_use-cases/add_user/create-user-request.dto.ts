@@ -1,14 +1,16 @@
-import { IsEmail, IsNotEmpty } from "@nestjs/class-validator";
-import { UserModel } from "src/user/_business/user.model";
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class CreateUserRequestDto {
 
+    @IsString()
     @IsNotEmpty()
     username: string;
-    @IsNotEmpty()
+    
     @IsEmail()
     email: string;
+
+    @IsString()
     @IsNotEmpty()
     password: string;
-   
+    
 }

@@ -2,7 +2,7 @@ import { BaseEntity } from '../../_core/_infrastructure/base.entity';
 import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import {
   IsEmail,
-} from "@nestjs/class-validator"
+} from "class-validator"
 
 @Entity({ name: 'user' })
 @Unique(['email','username'])
