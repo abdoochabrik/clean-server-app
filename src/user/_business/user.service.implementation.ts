@@ -1,12 +1,11 @@
 
 import { Injectable } from '@nestjs/common';
-import { BaseService } from 'src/_core/_business/base.service';
-import { UserEntity } from '../_infrastructure/user.entity';
+import { Either, right,MyError, left } from '../../_core/_business/baseError.error';
 import { UserRepository } from '../_infrastructure/user.repo';
 import { UserModel } from './user.model';
 import { UserServiceInterface } from './user.service.abstraction';
 @Injectable()
-export class UserServiceImpl implements UserServiceInterface {
+export class UserServiceImpl /*implements UserServiceInterface*/ {
 
     constructor(private readonly userRepository:UserRepository){}
 
@@ -26,8 +25,19 @@ export class UserServiceImpl implements UserServiceInterface {
         throw new Error('Method not implemented.');
     }
 
-    async create(user: UserModel): Promise<UserEntity> {
-        return await this.userRepository.createUser(user);
+    async create(user: UserModel): Promise<Either<MyError,UserModel>> {
+        try {
+            let savedUser:UserModel =  await this.userRepository.createUser(user)
+            return right(savedUser);
+          } catch (error) {
+            
+            if(error.code == 23505){
+                return left(new MyError(400,'email already exist','you can not create two users with same email'));
+            }
+            else {
+                return left(new MyError(500,'internal problem','unkown problem on the database level'))
+            }
+            }
+          
+          } 
     }
-
-}

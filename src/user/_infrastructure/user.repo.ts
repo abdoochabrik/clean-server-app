@@ -1,8 +1,7 @@
-
+import { Either } from 'src/_core/_business/baseError.error';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserModel } from '../_business/user.model';
 import { UserEntity } from './user.entity';
 @Injectable()
 export class UserRepository{

@@ -8,10 +8,10 @@ import {
 @Unique(['email','username'])
 export class UserEntity extends BaseEntity{
 
-  @Column({ type: 'varchar', length: 300 })
+  @Column({ type: 'varchar', length: 10,unique: true })
   username: string;
 
-  @Column()
+  @Column({ type: 'varchar', length: 20,unique: true })
   @IsEmail()
   email: string;
 
