@@ -7,6 +7,7 @@ import { UserEntity } from './_infrastructure/user.entity';
 import { UserRepository } from './_infrastructure/user.repo';
 import { CreateUserUseCase } from './_use-cases/add_user/add_user.use-case';
 import { UserController } from './_use-cases/user.controller';
+import { DeleteUserUseCase } from './_use-cases/delete_user/delete_user.use-case';
 @Global()
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { UserController } from './_use-cases/user.controller';
     ]),
   ],
   controllers: [UserController],
-  providers: [UserServiceImpl,UserRepository,CreateUserUseCase],
+  providers: [UserServiceImpl,UserRepository,CreateUserUseCase,DeleteUserUseCase],
   exports: [],
 })
 export class UserModule {}
