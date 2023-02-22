@@ -43,14 +43,14 @@ export const right = <L, A>(a: A): Either<L, A> => {
 export class MyError {
   code:number;
   message:string;
-  details:string;
-  constructor(code:number,message:string,details:string) {
+  reason:string;
+  constructor(code:number,message:string,reason:string) {
     this.code=code;
     this.message=message;
-    this.details=details;
+    this.reason=reason;
   }
 
-  public createError(code:number,message:string,details:string) : MyError {
-      return new MyError(code,message,details)
+  public static createError(code:number,message:string,reason:string) : MyError {
+      return new MyError(code,message,reason)
   }
 }
