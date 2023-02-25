@@ -12,14 +12,26 @@ export class UserServiceImpl implements UserServiceInterface {
     async deleteById(id: string): Promise<Either<MyError,boolean>> {
         try {
             const result = await this.userRepository.deleteUser(id);
-            return right(result)
+            const {affected,raw} = result;
+            if(raw.at(0) !== null ) {
+                return right(!!affected)
+            }
+            else  {
+                return left((new MyError(404,'not found','user with this id does not exist on the database')))
+            }
+            
         } catch (error) {
             return left(new MyError(500,'internal problem','unkown problem on the database level'))
         }
     }
 
-    getById(id: string): Promise<Either<MyError,UserModel>> {
-        throw new Error('Method not implemented.');
+    async getById(id: string): Promise<Either<MyError,UserModel>> {
+        try {
+            const user = await this.userRepository.getUserById(id)
+            return right(user)
+        } catch (error) {
+            
+        }
     }
 
     getAll(): Promise<Either<MyError,UserModel[]>> {
