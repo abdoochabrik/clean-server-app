@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import {Repository } from 'typeorm';
+import {DeleteResult} from '../../_core/_business/base.types'
+import { UserModel } from '../_business/user.model';
 import { UserEntity } from './user.entity';
 @Injectable()
 export class UserRepository{
@@ -11,9 +13,17 @@ export class UserRepository{
        return await this.userRepository.save(user)
     }
 
-   public async deleteUser(userId:string):Promise<boolean> {
-      const result = await this.userRepository.delete(userId);
-      return !!result.affected;
+   public async deleteUser(userId:string):Promise<DeleteResult<UserEntity>> {
+      const user = await this.userRepository.findOne({ where: { 'id' : userId }})
+      const deleteResult = await this.userRepository.delete(userId)
+      const {affected} = deleteResult
+      const result = new DeleteResult<UserEntity>(affected,[user])
+      return result;
+   }
+
+   public async getUserById(userId:string):Promise<UserEntity> {
+      const user = await this.userRepository.findOne({ where: { 'id' : userId }})
+      return user;
    }
 
  }
