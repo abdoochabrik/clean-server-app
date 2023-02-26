@@ -8,6 +8,9 @@ import { UserRepository } from './_infrastructure/user.repo';
 import { CreateUserUseCase } from './_use-cases/add_user/add_user.use-case';
 import { UserController } from './_use-cases/user.controller';
 import { DeleteUserUseCase } from './_use-cases/delete_user/delete_user.use-case';
+import { GetUserByIdUseCase } from './_use-cases/get_user/get_user.use-case';
+import { PaginateUsersUseCase } from './_use-cases/paginate_users/paginate_users.use-case';
+import { UpdateUserUseCase } from './_use-cases/update_user/update_user.use-case';
 @Global()
 @Module({
   imports: [
@@ -17,7 +20,13 @@ import { DeleteUserUseCase } from './_use-cases/delete_user/delete_user.use-case
     ]),
   ],
   controllers: [UserController],
-  providers: [UserServiceImpl,UserRepository,CreateUserUseCase,DeleteUserUseCase],
+  providers: [UserServiceImpl,
+              UserRepository,
+              CreateUserUseCase,
+              DeleteUserUseCase,
+              PaginateUsersUseCase,
+              GetUserByIdUseCase,
+              UpdateUserUseCase],
   exports: [],
 })
 export class UserModule {}

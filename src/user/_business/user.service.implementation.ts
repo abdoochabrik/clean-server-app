@@ -1,5 +1,6 @@
 
 import { Injectable } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common/enums';
 import { Either, right,MyError, left } from '../../_core/_business/baseError.error';
 import { UserRepository } from '../_infrastructure/user.repo';
 import { UserModel } from './user.model';
@@ -17,44 +18,63 @@ export class UserServiceImpl implements UserServiceInterface {
                 return right(!!affected)
             }
             else  {
-                return left((new MyError(404,'not found','user with this id does not exist on the database')))
+                return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this user',new Date(),`/api/user/${id}`))
             }
             
         } catch (error) {
-            return left(new MyError(500,'internal problem','unkown problem on the database level'))
+            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
         }
     }
 
     async getById(id: string): Promise<Either<MyError,UserModel>> {
         try {
             const user = await this.userRepository.getUserById(id)
-            return right(user)
+            if(user) {
+               return right(user) 
+            }
+            else {
+                return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this user',new Date(),`/api/user/${id}`))
+            }
+           
         } catch (error) {
-            
+            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
         }
     }
 
-    getAll(): Promise<Either<MyError,UserModel[]>> {
-        throw new Error('Method not implemented.');
+    async getAll(): Promise<Either<MyError,UserModel[]>> {
+        try {
+            const users:UserModel[] = await this.userRepository.getAllUsers()
+            return right(users);
+        } catch (error) {
+            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+        }
     }
     
-    update(id: string, R: UserModel): Promise<Either<MyError,UserModel>> {
-        throw new Error('Method not implemented.');
+    async update(id: string, user: UserModel): Promise<Either<MyError,any>> {
+        try {
+            const updatedResult = await this.userRepository.updateUser(id,user);
+            console.log('updated result',updatedResult)
+            return right(updatedResult)
+        } catch (error) {
+            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+        }
     }
 
-    async create(user: UserModel): Promise<Either<MyError,UserModel>> {
+   async create(user: UserModel): Promise<Either<MyError,UserModel>> {
         try {
             let savedUser:UserModel =  await this.userRepository.createUser(user)
             return right(savedUser);
           } catch (error) {
-            
+            console.log('error',error)
             if(error.code == 23505){
-                return left(MyError.createError(400,'email already exist','you can not create two users with same email'));
+                return left(MyError.createError(HttpStatus.BAD_REQUEST,'email already exist','you can not create two users with same email',new Date(),`/api/user`));
             }
             else {
-                return left(MyError.createError(500,'internal problem','unkown problem on the database level'))
+                return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level',new Date(),`/api/user`))
             }
             }
           
           } 
-    }
+
+}
+

@@ -1,3 +1,5 @@
+import { HttpStatus } from "@nestjs/common/enums";
+
 export type Either<L, A> = Left<L, A> | Right<L, A>;
 
 export class Left<L, A> {
@@ -41,16 +43,22 @@ export const right = <L, A>(a: A): Either<L, A> => {
 };
 
 export class MyError {
-  code:number;
+
+  code:HttpStatus;
   message:string;
   reason:string;
-  constructor(code:number,message:string,reason:string) {
+  timestamp?: Date;
+  path?: string;
+
+  constructor(code:HttpStatus,message:string,reason:string, timestamp?:Date, path?: string) {
     this.code=code;
     this.message=message;
     this.reason=reason;
+    this.timestamp = timestamp;
+    this.path = path;
   }
 
-  public static createError(code:number,message:string,reason:string) : MyError {
-      return new MyError(code,message,reason)
+  public static createError(code:HttpStatus,message:string,reason:string,timestamp?:Date, path?: string) : MyError {
+      return new MyError(code,message,reason,timestamp,path)
   }
 }
