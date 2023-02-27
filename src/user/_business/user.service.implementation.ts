@@ -1,7 +1,7 @@
-
 import { Injectable } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { Either, right,MyError, left } from '../../_core/_business/baseError.error';
+import { UserEntity } from '../_infrastructure/user.entity';
 import { UserRepository } from '../_infrastructure/user.repo';
 import { UserModel } from './user.model';
 import { UserServiceInterface } from './user.service.abstraction';
@@ -50,24 +50,38 @@ export class UserServiceImpl implements UserServiceInterface {
         }
     }
     
-    async update(id: string, user: UserModel): Promise<Either<MyError,any>> {
+    async update(id: string, user: UserModel): Promise<Either<MyError,UserEntity>> {
+        const foundUser:UserEntity = await this.userRepository.getUserById(id)
+        if(!foundUser) {
+            return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this user',new Date(),`/api/user/${id}`))
+        }
         try {
-            const updatedResult = await this.userRepository.updateUser(id,user);
-            console.log('updated result',updatedResult)
-            return right(updatedResult)
+            const result = await this.userRepository.updateUser(id,user);
+            const {raw} = result;
+            if(raw.at(0) !== null ) {
+                return right(raw[0]);
+            }
+            else  {
+                return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this user',new Date(),`/api/user/${id}`))
+            }
+            
         } catch (error) {
-            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+            if(error.code == 23505){
+                return left(MyError.createError(HttpStatus.BAD_REQUEST,'email or username already exist','you can not create two users with same email or username',new Date(),`/api/user`));
+            } 
+            else {
+                return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+            }
         }
     }
 
    async create(user: UserModel): Promise<Either<MyError,UserModel>> {
         try {
-            let savedUser:UserModel =  await this.userRepository.createUser(user)
+            const savedUser:UserModel =  await this.userRepository.createUser(user)
             return right(savedUser);
           } catch (error) {
-            console.log('error',error)
             if(error.code == 23505){
-                return left(MyError.createError(HttpStatus.BAD_REQUEST,'email already exist','you can not create two users with same email',new Date(),`/api/user`));
+                return left(MyError.createError(HttpStatus.BAD_REQUEST,'email or username already exist','you can not create two users with same email or username',new Date(),`/api/user`));
             }
             else {
                 return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level',new Date(),`/api/user`))

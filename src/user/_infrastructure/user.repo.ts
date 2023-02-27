@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {Repository, UpdateResult } from 'typeorm';
-import {DeleteResult} from '../../_core/_business/base.types'
+import {Repository} from 'typeorm';
+import {DeleteResult, UpdateResult } from '../../_core/_business/base.types'
 import { UserModel } from '../_business/user.model';
 import { UserEntity } from './user.entity';
 @Injectable()
@@ -31,16 +31,13 @@ export class UserRepository{
       return user;
    }
 
-   public async updateUser(id:string,user:UserModel):Promise<UpdateResult> {
-      const updatedUser = await this.userRepository.update({
-         id,
-       },user);
-       console.log('update resss',updatedUser)
-      return updatedUser;
+   public async updateUser(id:string,user:Partial<UserEntity>):Promise<UpdateResult<UserEntity>> {
+      const updateResult = await this.userRepository.update(id,{...user});
+      const {affected}=updateResult
+      const foundUser = await this.userRepository.findOne({ where: { 'id' : id }})
+      const result = new UpdateResult<UserEntity>(affected,[foundUser])
+      return result;
    }
-
-
-
 
 
  }

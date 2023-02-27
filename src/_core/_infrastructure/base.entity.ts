@@ -1,7 +1,7 @@
 import {PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { BaseModel } from '../_business/base.model';
 
-export class BaseEntity {
+export class BaseEntity implements BaseModel {
   @PrimaryGeneratedColumn("uuid")
   id?: string;
 

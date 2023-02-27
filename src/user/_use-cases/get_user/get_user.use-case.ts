@@ -9,7 +9,7 @@ export class GetUserByIdUseCase{
     
     public async getUserById(userId:string): Promise<MyError | UserEntity> {
 
-        let result =  await this.userService.getById(userId)
+        const result =  await this.userService.getById(userId)
         if(result.isRight()){
             return result.value
         }
@@ -17,10 +17,9 @@ export class GetUserByIdUseCase{
            switch(result.value.code){
             case 404:
                 throw new NotFoundException(result.value);
-            case 500:
+            default:
                 throw new InternalServerErrorException(result.value);
-            }
-           
+           }
         }
     }
 }

@@ -9,13 +9,14 @@ export class CreateUserUseCase{
     constructor(private readonly userService:UserServiceImpl){}
     
     public async createUser(user:CreateUserRequestDto): Promise<MyError | UserModel> {
-        let userToCreate:UserModel = {
+
+        const userToCreate:UserModel = {
             username: user.username,
             email: user.email,
             password: user.password,
         }
 
-        let result =  await this.userService.create(userToCreate)
+        const result =  await this.userService.create(userToCreate)
         if(result.isRight()){
             return result.value
         }
@@ -23,9 +24,8 @@ export class CreateUserUseCase{
            switch(result.value.code){
             case 400:
                 throw new BadRequestException(result.value);
-            case 500:
+            default:
                 throw new InternalServerErrorException(result.value);
-
            }
            
         }
