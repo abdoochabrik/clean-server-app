@@ -3,20 +3,21 @@ import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import {
   IsEmail,
 } from "class-validator"
+import { UserModel } from '../_business/user.model';
 
 @Entity({ name: 'user' })
 @Unique(['email','username'])
-export class UserEntity extends BaseEntity{
+export class UserEntity extends BaseEntity implements UserModel{
 
   @Column({ type: 'varchar', length: 10,unique: true })
-  username: string;
+  username?: string;
 
   @Column({ type: 'varchar', length: 20,unique: true })
   @IsEmail()
-  email: string;
+  email?: string;
 
   @Column({ type: 'varchar', length: 300 })
-  password: string;
+  password?: string;
 
   @Column({ type: 'boolean', default:false })
   isConnected?:boolean;

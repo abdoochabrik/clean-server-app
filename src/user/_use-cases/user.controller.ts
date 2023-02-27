@@ -8,6 +8,7 @@ import { CreateUserRequestDto } from './add_user/create-user-request.dto'
 import { DeleteUserUseCase } from './delete_user/delete_user.use-case'
 import { GetUserByIdUseCase } from './get_user/get_user.use-case'
 import { PaginateUsersUseCase } from './paginate_users/paginate_users.use-case'
+import { UpdateUserRequestDto } from './update_user/update-user-request.dto'
 import { UpdateUserUseCase } from './update_user/update_user.use-case'
 
 @Controller('/user')
@@ -39,7 +40,7 @@ export class UserController {
   }
 
   @Patch(':id')
-  async updateUser(@Param('id',ParseUUIDPipe) userId:string, @Body()  user:CreateUserRequestDto): Promise<MyError | UserModel> {
+  async updateUser(@Param('id',ParseUUIDPipe) userId:string, @Body()  user:UpdateUserRequestDto): Promise<MyError | UserModel> {
       return await this.updateUserUseCase.updateUser(userId,user)
   }
 

@@ -9,14 +9,12 @@ export class PaginateUsersUseCase{
     
     public async paginateUsers(): Promise<MyError | UserModel[]> {
 
-        let result =  await this.userService.getAll()
+        const result =  await this.userService.getAll()
         if(result.isRight()){
             return result.value
         }
         else if(result.isLeft()){
-           switch(result.value.code){
-            case 500:
-                throw new InternalServerErrorException(result.value);   
+           switch(result.value.code){  
             default:
                 throw new InternalServerErrorException(result.value);
            }
