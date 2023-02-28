@@ -27,6 +27,6 @@ import { UpdateUserUseCase } from './_use-cases/update_user/update_user.use-case
               PaginateUsersUseCase,
               GetUserByIdUseCase,
               UpdateUserUseCase],
-  exports: [],
+  exports: [GetUserByIdUseCase, UserServiceImpl,UserRepository],
 })
 export class UserModule {}
