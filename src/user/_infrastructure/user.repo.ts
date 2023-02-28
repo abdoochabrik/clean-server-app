@@ -22,7 +22,9 @@ export class UserRepository{
    }
 
    public async getUserById(userId:string):Promise<UserEntity> {
-      const user = await this.userRepository.findOne({ where: { 'id' : userId }})
+      const user = await this.userRepository.findOne({ where: { 'id' : userId },  relations: {
+         profiles: true,
+     },})
       return user;
    }
 

@@ -1,6 +1,6 @@
 import { Injectable,BadRequestException,InternalServerErrorException } from '@nestjs/common';
 import { UserModel } from 'src/user/_business/user.model';
-import { Either, MyError } from '../../../_core/_business/baseError.error';
+import { MyError } from '../../../_core/_business/baseError.error';
 import { UserServiceImpl } from '../../_business/user.service.implementation';
 import { CreateUserRequestDto } from './create-user-request.dto';
 @Injectable()

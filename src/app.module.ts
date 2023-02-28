@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserEntity } from './user/_infrastructure/user.entity';
 import { CoreModule } from "./_core/core.module";
+import { ProfileModule } from './profile/profile.module';
+import { ProfileEntity } from './profile/_infrastructure/profile.entity';
 
 @Module({
   imports: [
@@ -19,10 +21,11 @@ import { CoreModule } from "./_core/core.module";
         database: process.env.POSTGRES_DATABASE,
         entities: [
           UserEntity,
+          ProfileEntity
         ],
         synchronize: true
       })
-    }),UserModule],
+    }),UserModule, ProfileModule],
   providers: []
 })
 export class AppModule {}
