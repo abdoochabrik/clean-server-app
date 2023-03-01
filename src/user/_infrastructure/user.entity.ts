@@ -23,6 +23,8 @@ export class UserEntity extends BaseEntity implements UserModel{
   @Column({ type: 'boolean', default:false })
   isConnected?:boolean;
 
-  @OneToMany(() => ProfileEntity, (profile) => profile.user)
+  @OneToMany(() => ProfileEntity, (profile) => profile.user,  { 
+    onDelete: 'CASCADE' 
+  })
   profiles?:ProfileEntity[]
 }

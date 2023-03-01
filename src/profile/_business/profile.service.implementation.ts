@@ -11,7 +11,7 @@ export class ProfileServiceImpl implements ProfileServiceInterface {
 
     public async create(profile: ProfileModel): Promise<Either<MyError, ProfileModel>> {
         try {
-            const createdProfile:ProfileModel = await this.profileRepo.createProfile(profile)
+            const createdProfile:ProfileModel = await this.profileRepo.createEntity(profile)
             return right(createdProfile)
         } catch (error) {
             if(error.code == 23505){
@@ -25,7 +25,7 @@ export class ProfileServiceImpl implements ProfileServiceInterface {
 
     public async deleteById(profileId: string): Promise<Either<MyError, boolean>> {
         try {
-            const result = await this.profileRepo.deleteProfile(profileId);
+            const result = await this.profileRepo.deleteEntityById(profileId);
             const {affected,raw} = result;
             if(raw.at(0) !== null ) {
                 return right(!!affected)
@@ -39,17 +39,31 @@ export class ProfileServiceImpl implements ProfileServiceInterface {
         }
     }
 
-    getById(id: string): Promise<Either<MyError, ProfileModel>> {
-        throw new Error('Method not implemented.');
+    public async getById(id: string): Promise<Either<MyError, ProfileModel>> {
+        try {
+            const profile:ProfileModel = await this.profileRepo.getEntityById(id);
+            if(profile) {
+                return right(profile)
+            }
+            else {
+                return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this profile',new Date(),`/api/profile/${id}`))
+            }
+        } catch (error) {
+            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+        }
+   
     }
+    
     public async getAll(): Promise<Either<MyError, ProfileModel[]>> {
         try {
-            const profiles:ProfileModel[] = await this.profileRepo.getProfiles(); 
+            const profiles:ProfileModel[] = await this.profileRepo.paginateEntities(); 
             return right(profiles)
         } catch (error) {
             return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level',new Date(),`/api/user`))
         }
     }
+
+
     update(id: string, R: ProfileModel): Promise<Either<MyError, ProfileModel>> {
         throw new Error('Method not implemented.');
     }
