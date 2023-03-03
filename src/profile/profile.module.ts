@@ -9,8 +9,10 @@ import { ProfileEntity } from './_infrastructure/profile.entity';
 import { ProfileRepository } from './_infrastructure/profile.repo';
 import { CreateProfileUseCase } from './_use-cases/add_profile/add_profile.use-case';
 import { DeleteProfileUseCase } from './_use-cases/delete_profile/delete_profile.use-case';
+import { GetProfileByIdUseCase } from './_use-cases/get_profile_by_id/get-profile-by-id.use-case';
 import { PaginateProfilesUseCase } from './_use-cases/paginate_profiles/paginate_profiles.use-case';
 import { ProfileController } from './_use-cases/profile.controller';
+import { UpdateProfilesUseCase } from './_use-cases/update_profile/update_profile.use-case';
 
 @Global()
 @Module({
@@ -25,6 +27,8 @@ import { ProfileController } from './_use-cases/profile.controller';
     providers: [ProfileServiceImpl,
               ProfileRepository,
               CreateProfileUseCase,
+              UpdateProfilesUseCase,
+              GetProfileByIdUseCase,
               PaginateProfilesUseCase,
               DeleteProfileUseCase,
               GetUserByIdUseCase,

@@ -12,7 +12,7 @@ export class UserServiceImpl implements UserServiceInterface {
 
     async deleteById(id: string): Promise<Either<MyError,boolean>> {
         try {
-            const result = await this.userRepository.deleteUser(id);
+            const result = await this.userRepository.deleteEntityById(id)
             const {affected,raw} = result;
             if(raw.at(0) !== null ) {
                 return right(!!affected)
@@ -28,7 +28,7 @@ export class UserServiceImpl implements UserServiceInterface {
 
     async getById(id: string): Promise<Either<MyError,UserModel>> {
         try {
-            const user = await this.userRepository.getUserById(id)
+            const user = await this.userRepository.getEntityById(id)
             if(user) {
                return right(user) 
             }
@@ -43,7 +43,7 @@ export class UserServiceImpl implements UserServiceInterface {
 
     async getAll(): Promise<Either<MyError,UserModel[]>> {
         try {
-            const users:UserModel[] = await this.userRepository.getAllUsers()
+            const users:UserModel[] = await this.userRepository.paginateEntities()
             return right(users);
         } catch (error) {
             return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
@@ -51,7 +51,7 @@ export class UserServiceImpl implements UserServiceInterface {
     }
     
     async update(id: string, user: UserModel): Promise<Either<MyError,UserEntity>> {
-        const foundUser:UserEntity = await this.userRepository.getUserById(id)
+        const foundUser:UserEntity = await this.userRepository.getEntityById(id)
         if(!foundUser) {
             return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this user',new Date(),`/api/user/${id}`))
         }
@@ -77,7 +77,7 @@ export class UserServiceImpl implements UserServiceInterface {
 
    async create(user: UserModel): Promise<Either<MyError,UserModel>> {
         try {
-            const savedUser:UserModel =  await this.userRepository.createUser(user)
+            const savedUser:UserModel =  await this.userRepository.createEntity(user)
             return right(savedUser);
           } catch (error) {
             if(error.code == 23505){

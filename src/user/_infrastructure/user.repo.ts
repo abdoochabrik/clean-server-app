@@ -1,37 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { BaseRepository } from '../../_core/_infrastructure/base.repo';
 import {Repository} from 'typeorm';
 import {DeleteResult, UpdateResult } from '../../_core/_business/base.types'
-import { UserModel } from '../_business/user.model';
 import { UserEntity } from './user.entity';
 @Injectable()
-export class UserRepository{
+export class UserRepository extends BaseRepository<UserEntity>{
+   
     constructor( @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>){}
-
-    public async createUser(user:UserEntity):Promise<UserEntity> {
-       return await this.userRepository.save(user)
+    private readonly userRepository: Repository<UserEntity>){
+      super(userRepository)
     }
-
-   public async deleteUser(userId:string):Promise<DeleteResult<UserEntity>> {
-      const user = await this.userRepository.findOne({ where: { 'id' : userId }})
-      const deleteResult = await this.userRepository.delete(userId)
-      const {affected} = deleteResult
-      const result = new DeleteResult<UserEntity>(affected,[user])
-      return result;
-   }
-
-   public async getUserById(userId:string):Promise<UserEntity> {
-      const user = await this.userRepository.findOne({ where: { 'id' : userId },  relations: {
-         profiles: true,
-     },})
-      return user;
-   }
-
-   public async getAllUsers():Promise<UserEntity[]> {
-      const user = await this.userRepository.find()
-      return user;
-   }
 
    public async updateUser(id:string,user:Partial<UserEntity>):Promise<UpdateResult<UserEntity>> {
       const updateResult = await this.userRepository.update(id,{...user});
