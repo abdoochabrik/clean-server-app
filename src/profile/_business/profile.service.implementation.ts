@@ -1,5 +1,6 @@
 import { Injectable,HttpStatus } from '@nestjs/common';
 import { Either, left, MyError, right } from '../../_core/_business/baseError.error'
+import { ProfileEntity } from '../_infrastructure/profile.entity';
 import { ProfileRepository } from '../_infrastructure/profile.repo';
 import { ProfileModel } from './profile.model';
 import { ProfileServiceInterface} from './profile.service.abstraction';
@@ -53,7 +54,7 @@ export class ProfileServiceImpl implements ProfileServiceInterface {
         }
    
     }
-    
+
     public async getAll(): Promise<Either<MyError, ProfileModel[]>> {
         try {
             const profiles:ProfileModel[] = await this.profileRepo.paginateEntities(); 
@@ -64,8 +65,26 @@ export class ProfileServiceImpl implements ProfileServiceInterface {
     }
 
 
-    update(id: string, R: ProfileModel): Promise<Either<MyError, ProfileModel>> {
-        throw new Error('Method not implemented.');
+    public async update(id: string, profile: ProfileModel): Promise<Either<MyError, ProfileModel>> {
+        const foundProfile:ProfileEntity = await this.profileRepo.getEntityById(id)
+        if(!foundProfile) {
+            return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this profile',new Date(),`/api/profile/${id}`))
+        }
+        try {
+            const result = await this.profileRepo.updateUser(id,profile)
+            const {raw} = result;
+            if(raw.at(0) !== null ) {
+                return right(raw[0]);
+            }
+            else  {
+                return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this profile',new Date(),`/api/profile/${id}`))
+            }
+            
+        } catch (error) {
+
+                return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+            
+        }
     }
 
 
