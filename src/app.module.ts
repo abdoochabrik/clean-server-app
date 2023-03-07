@@ -6,6 +6,7 @@ import { UserEntity } from './user/_infrastructure/user.entity';
 import { CoreModule } from "./_core/core.module";
 import { ProfileModule } from './profile/profile.module';
 import { ProfileEntity } from './profile/_infrastructure/profile.entity';
+import { BookModule } from './book/book.module';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { ProfileEntity } from './profile/_infrastructure/profile.entity';
         ],
         synchronize: true
       })
-    }),UserModule, ProfileModule],
+    }),UserModule, ProfileModule, BookModule],
   providers: []
 })
 export class AppModule {}
