@@ -27,4 +27,5 @@ export class UserEntity extends BaseEntity implements UserModel{
     onDelete: 'CASCADE' 
   })
   profiles?:ProfileEntity[]
+  
 }

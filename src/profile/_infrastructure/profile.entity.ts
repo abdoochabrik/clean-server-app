@@ -1,8 +1,9 @@
 import { BaseEntity } from '../../_core/_infrastructure/base.entity';
-import { Entity, Column, ManyToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { ProfileModel } from '../_business/profile.model';
 import { profileType } from '../_business/profile.enum';
 import { UserEntity } from '../../user/_infrastructure/user.entity';
+import { BookEntity } from 'src/book/_infrastructure/book.entity';
 
 @Entity({ name: 'profile' })
 export class ProfileEntity extends BaseEntity implements ProfileModel{
@@ -15,5 +16,8 @@ export class ProfileEntity extends BaseEntity implements ProfileModel{
 
   @ManyToOne(() => UserEntity, (user) => user.profiles)
   user?:UserEntity
+
+  @OneToMany(() => BookEntity, (book) => book.profile)
+  books?:BookEntity[]
 
 }
