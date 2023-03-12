@@ -11,7 +11,7 @@ export class CreateBookUseCase{
     constructor(private readonly bookService:BookServiceImplementation, 
                 private readonly getProfileByIdCase:GetProfileByIdUseCase){}
     
-    public async createUser(profileId:string, book:CreateBookRequestDto): Promise<MyError | BookModel> {
+    public async createBook(profileId:string, book:CreateBookRequestDto): Promise<MyError | BookModel> {
 
         const profile:ProfileModel = await this.getProfileByIdCase.getProfileById(profileId) as ProfileModel;
         
