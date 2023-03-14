@@ -1,7 +1,7 @@
 import {Injectable,NotFoundException,InternalServerErrorException} from '@nestjs/common';
 import { MyError } from "../../../_core/_business/baseError.error";
-import { BookModel } from "src/book/_business/book.model";
-import { BookServiceImplementation } from "src/book/_business/book.service.implementation";
+import { BookServiceImplementation } from '../../_business/book.service.implementation';
+import { BookModel } from '../../_business/book.model';
 
 @Injectable()
 export class GetBookByIdUseCase{

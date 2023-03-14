@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common/decorators";
 import { HttpStatus } from "@nestjs/common/enums";
-import { Either, left, MyError, right } from "src/_core/_business/baseError.error";
+import { Either, left, MyError, right } from "../../_core/_business/baseError.error";
 import { BookEntity } from "../_infrastructure/book.entity";
 import { BookRepository } from "../_infrastructure/book.repo";
 import { BookModel } from "./book.model";

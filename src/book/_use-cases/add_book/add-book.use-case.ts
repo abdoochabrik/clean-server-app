@@ -1,10 +1,11 @@
 import { Injectable,BadRequestException,InternalServerErrorException } from '@nestjs/common';
-import { ProfileModel } from 'src/profile/_business/profile.model';
+import { ProfileModel } from '../../../profile/_business/profile.model';
 import { MyError } from '../../../_core/_business/baseError.error';
-import { BookServiceImplementation } from 'src/book/_business/book.service.implementation';
-import { BookModel } from 'src/book/_business/book.model';
-import { CreateBookRequestDto } from './create-profile-request.dto';
-import { GetProfileByIdUseCase } from 'src/profile/_use-cases/get_profile_by_id/get-profile-by-id.use-case';
+import { BookServiceImplementation } from '../../_business/book.service.implementation';
+import { GetProfileByIdUseCase } from '../../../profile/_use-cases/get_profile_by_id/get-profile-by-id.use-case';
+import { BookModel } from '../../_business/book.model';
+import { CreateBookRequestDto } from './create-book-request.dto';
+
 @Injectable()
 export class CreateBookUseCase{
 

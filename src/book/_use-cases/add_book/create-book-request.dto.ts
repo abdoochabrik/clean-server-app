@@ -9,6 +9,6 @@ export class CreateBookRequestDto {
 
     @IsNotEmpty()
     @IsNumber()
-    nbrPage:string;
+    nbrPage:number;
 
 }

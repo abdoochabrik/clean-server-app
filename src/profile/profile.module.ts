@@ -33,7 +33,7 @@ import { UpdateProfilesUseCase } from './_use-cases/update_profile/update_profil
               DeleteProfileUseCase,
               GetUserByIdUseCase,
               UserServiceImpl],
-    exports: [],
+    exports: [ProfileRepository,GetProfileByIdUseCase,ProfileServiceImpl],
 }
 )
 

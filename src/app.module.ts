@@ -7,6 +7,7 @@ import { CoreModule } from "./_core/core.module";
 import { ProfileModule } from './profile/profile.module';
 import { ProfileEntity } from './profile/_infrastructure/profile.entity';
 import { BookModule } from './book/book.module';
+import { BookEntity } from './book/_infrastructure/book.entity';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { BookModule } from './book/book.module';
         database: process.env.POSTGRES_DATABASE,
         entities: [
           UserEntity,
-          ProfileEntity
+          ProfileEntity,
+          BookEntity
         ],
         synchronize: true
       })

@@ -1,6 +1,6 @@
 import { Injectable,InternalServerErrorException,NotFoundException } from '@nestjs/common';
 import { MyError } from 'src/_core/_business/baseError.error';
-import { BookServiceImplementation } from 'src/book/_business/book.service.implementation';
+import { BookServiceImplementation } from '../../_business/book.service.implementation';
 
 @Injectable()
 export class DeleteBookUseCase {
