@@ -16,7 +16,7 @@ export abstract class BaseRepository<E extends BaseEntity> {
     }
 
    public async getEntityById(entityId: string): Promise<E | null> {
-        return await this.baseRepository.findOne({where : { 'id': entityId}} as FindOneOptions<E>);
+        return await this.baseRepository.findOne({where : { 'id': entityId}} as FindOneOptions<E>, );
     }
 
     public async deleteEntityById(entityId: string): Promise<DeleteResult<E>> {

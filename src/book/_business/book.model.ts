@@ -4,6 +4,7 @@ import { BaseModel } from "src/_core/_business/base.model";
 
 export interface BookModel extends BaseModel {
     name:string,
-    nbrPage:string;
+    nbrPage:number;
+    price?:number
     profile?:ProfileModel
 }
