@@ -20,5 +20,8 @@ export class UserRepository extends BaseRepository<UserEntity>{
       return result;
    }
 
+   public async getEntityById(entityId: string): Promise<UserEntity | null> {
+    return await this.userRepository.findOne({where : { 'id': entityId}})
+  }
 
- }
+}  
