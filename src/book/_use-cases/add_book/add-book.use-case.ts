@@ -19,8 +19,10 @@ export class CreateBookUseCase{
         const bookToCreate:BookModel = {
             name: book.name,
             nbrPage: book.nbrPage,
+            price:book.price,
             profile: profile
         }
+ 
 
         const result =  await this.bookService.create(bookToCreate)
         if(result.isRight()){
