@@ -22,7 +22,9 @@ export class ProfileRepository extends BaseRepository<ProfileEntity> {
      }
 
     public async getEntityById(entityId: string): Promise<ProfileEntity | null> {
-        return await this.profileRepository.findOne({where : { 'id': entityId}})
+        return await this.profileRepository.findOne({where : { 'id': entityId}, relations: {
+            books: true,
+        },})
     }
     
 }

@@ -24,8 +24,20 @@ export class BookServiceImplementation implements BookServiceInterface  {
             }
         }
     }
-    deleteById(id: string): Promise<Either<MyError, boolean>> {
-        throw new Error("Method not implemented.");
+    public async deleteById(bookId: string): Promise<Either<MyError, boolean>> {
+        try {
+            const result = await this.bookRepository.deleteEntityById(bookId);
+            const {affected,raw} = result;
+            if(raw.at(0) !== null ) {
+                return right(!!affected)
+            }
+            else  {
+                return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this book',new Date(),`/api/book/${bookId}`))
+            }
+            
+        } catch (error) {
+            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+        }
     }
     getById(id: string): Promise<Either<MyError, BookModel>> {
         throw new Error("Method not implemented.");
