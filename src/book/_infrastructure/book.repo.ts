@@ -8,8 +8,14 @@ import { BaseRepository } from '../../_core/_infrastructure/base.repo';
 export class BookRepository extends BaseRepository<BookEntity> {
 
     constructor( @InjectRepository(BookEntity)
-    private readonly profileRepository: Repository<BookEntity>){
-        super(profileRepository)
+    private readonly bookRepository: Repository<BookEntity>){
+        super(bookRepository)
+    }
+
+    public async getEntityById(entityId: string): Promise<BookEntity | null> {
+        return await this.bookRepository.findOne({where : { 'id': entityId}, relations: {
+            profile: true,
+        },})
     }
 
  }
