@@ -39,12 +39,31 @@ export class BookServiceImplementation implements BookServiceInterface  {
             return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
         }
     }
-    getById(id: string): Promise<Either<MyError, BookModel>> {
-        throw new Error("Method not implemented.");
+
+    async getById(id: string): Promise<Either<MyError, BookModel>> {
+        try {
+            const book:BookModel = await this.bookRepository.getEntityById(id);
+            if(book) {
+                return right(book)
+            }
+            else {
+                return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this book',new Date(),`/api/book/${id}`))
+            }
+        } catch (error) {
+            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+        }
+   
     }
-    getAll(): Promise<Either<MyError, BookModel[]>> {
-        throw new Error("Method not implemented.");
+
+    async getAll(): Promise<Either<MyError, BookModel[]>> {
+        try {
+            const books:BookModel[] = await this.bookRepository.paginateEntities(); 
+            return right(books)
+        } catch (error) {
+            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level',new Date(),`/api/books`))
+        }
     }
+    
     update(id: string, R: BookModel): Promise<Either<MyError, BookModel>> {
         throw new Error("Method not implemented.");
     }
