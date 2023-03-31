@@ -13,10 +13,12 @@ export class ProfileRepository extends BaseRepository<ProfileEntity> {
         super(profileRepository)
     }
 
-    public async updateUser(id:string,profile:Partial<ProfileEntity>):Promise<UpdateResult<ProfileEntity>> {
+    public async updateProfile(id:string,profile:Partial<ProfileEntity>):Promise<UpdateResult<ProfileEntity>> {
         const foundProfile = await this.profileRepository.findOne({ where: { 'id' : id }})
         const updateResult = await this.profileRepository.update(id,{...profile});
         const {affected}=updateResult
+        foundProfile.livesIn = profile.livesIn;
+        foundProfile.profileType = profile.profileType
         const result = new UpdateResult<ProfileEntity>(affected,[foundProfile])
         return result;
      }

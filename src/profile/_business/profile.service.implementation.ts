@@ -71,7 +71,7 @@ export class ProfileServiceImpl implements ProfileServiceInterface {
             return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this profile',new Date(),`/api/profile/${id}`))
         }
         try {
-            const result = await this.profileRepo.updateUser(id,profile)
+            const result = await this.profileRepo.updateProfile(id,profile)
             const {raw} = result;
             if(raw.at(0) !== null ) {
                 return right(raw[0]);
