@@ -10,10 +10,8 @@ import { DeleteBookUseCase } from './_use-cases/delete_book/delete-book.use-case
 import { GetBookByIdUseCase } from './_use-cases/get_book_by_id/get-book-by-id.use-case';
 import { ProfileServiceImpl } from '../profile/_business/profile.service.implementation';
 import { GetProfileByIdUseCase } from '../profile/_use-cases/get_profile_by_id/get-profile-by-id.use-case';
-//import { PaginateProfilesUseCase } from './_use-cases/paginate_profiles/paginate_profiles.use-case';
 import { BookController } from './_use-cases/book.controller';
-import { ProfileRepository } from '../profile/_infrastructure/profile.repo';
-
+import { PaginateBooksUseCase } from './_use-cases/paginate_books/paginate-books.use-case';
 @Global()
 @Module({
 
@@ -23,6 +21,8 @@ import { ProfileRepository } from '../profile/_infrastructure/profile.repo';
           ]), ],
     controllers: [BookController],    
     providers: [BookServiceImplementation,
+                PaginateBooksUseCase,
+                GetBookByIdUseCase,
                 BookRepository,
                 CreateBookUseCase,
                 DeleteBookUseCase,

@@ -1,15 +1,15 @@
 import { Injectable,InternalServerErrorException } from '@nestjs/common';
-import { UserModel } from 'src/user/_business/user.model';
+import { BookModel } from 'src/book/_business/book.model';
 import { MyError } from '../../../_core/_business/baseError.error';
-import { UserServiceImpl } from '../../_business/user.service.implementation';
+import { BookServiceImplementation } from '../../_business/book.service.implementation';
 @Injectable()
-export class PaginateUsersUseCase{
+export class PaginateBooksUseCase{
 
-    constructor(private readonly userService:UserServiceImpl){}
+    constructor(private readonly bookService:BookServiceImplementation){}
     
-    public async paginateUsers(): Promise<MyError | UserModel[]> {
+    public async paginateBooks(): Promise<MyError | BookModel[]> {
 
-        const result =  await this.userService.getAll()
+        const result =  await this.bookService.getAll()
         if(result.isRight()){
             return result.value
         }

@@ -8,7 +8,7 @@ export class GetBookByIdUseCase{
 
     constructor(private readonly bookService:BookServiceImplementation){}
 
-    public async getProfileById(id:string):Promise<MyError | BookModel> {
+    public async getBookById(id:string):Promise<MyError | BookModel> {
         const result = await this.bookService.getById(id)
         if(result.isRight()){
             return result.value
