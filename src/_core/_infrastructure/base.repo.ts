@@ -15,10 +15,6 @@ export abstract class BaseRepository<E extends BaseEntity> {
         return await this.baseRepository.save(entity);
     }
 
-   /*public async getEntityById(entityId: string): Promise<E | null> {
-        return await this.baseRepository.findOne({where : { 'id': entityId}} as FindOneOptions<E>, );
-    }*/
-
     public async deleteEntityById(entityId: string): Promise<DeleteResult<E>> {
       const entity = await this.baseRepository.findOne({where:{'id':entityId}} as FindOneOptions<E>)
       const deleteResult = await this.baseRepository.delete(entityId)
