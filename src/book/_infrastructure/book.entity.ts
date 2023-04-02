@@ -7,10 +7,10 @@ import { ProfileEntity } from '../../profile/_infrastructure/profile.entity';
 export class BookEntity extends BaseEntity implements BookModel{
   
   @Column({ type: 'varchar', length: 20, nullable:false})  
-  name: string;
+  name?: string;
 
   @Column({ type: 'int',nullable:false})
-  nbrPage: number;
+  nbrPage?: number;
 
   @Column({ type: 'int', nullable:true})
   price?: number;

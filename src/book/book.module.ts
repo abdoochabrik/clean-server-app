@@ -12,6 +12,7 @@ import { ProfileServiceImpl } from '../profile/_business/profile.service.impleme
 import { GetProfileByIdUseCase } from '../profile/_use-cases/get_profile_by_id/get-profile-by-id.use-case';
 import { BookController } from './_use-cases/book.controller';
 import { PaginateBooksUseCase } from './_use-cases/paginate_books/paginate-books.use-case';
+import { UpdateBookUseCase } from './_use-cases/update_book/update-book.use-case';
 @Global()
 @Module({
 
@@ -23,6 +24,7 @@ import { PaginateBooksUseCase } from './_use-cases/paginate_books/paginate-books
     providers: [BookServiceImplementation,
                 PaginateBooksUseCase,
                 GetBookByIdUseCase,
+                UpdateBookUseCase,
                 BookRepository,
                 CreateBookUseCase,
                 DeleteBookUseCase,

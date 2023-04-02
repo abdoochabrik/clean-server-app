@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BookEntity } from './book.entity';
 import { BaseRepository } from '../../_core/_infrastructure/base.repo';
+import {UpdateResult} from '../../_core/_business/base.types'
 
 @Injectable()
 export class BookRepository extends BaseRepository<BookEntity> {
@@ -17,5 +18,14 @@ export class BookRepository extends BaseRepository<BookEntity> {
             profile: true,
         },})
     }
+
+    
+    public async updateBook(id:string,book:Partial<BookEntity>):Promise<UpdateResult<BookEntity>> {
+        const foundbook = await this.bookRepository.findOne({ where: { 'id' : id }})
+        const updateResult = await this.bookRepository.update(id,{...book});
+        const {affected}=updateResult
+        const result = new UpdateResult<BookEntity>(affected,[foundbook])
+        return result;
+     }
 
  }
