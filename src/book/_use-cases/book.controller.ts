@@ -39,7 +39,7 @@ export class BookController {
     }
 
     @Patch(':bookId')
-    async update(@Param('bookId',ParseUUIDPipe) bookId:string,@Body() book:UpdateBookRequestDto) {
-         return this.updateBookUseCase.updateBook(bookId,book)
+    async updateBook(@Param('bookId',ParseUUIDPipe) bookId:string,@Body() book:UpdateBookRequestDto) {
+         return await this.updateBookUseCase.updateBook(bookId,book)
     }
 }

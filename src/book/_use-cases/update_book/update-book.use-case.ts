@@ -1,11 +1,11 @@
-import { InternalServerErrorException, NotFoundException } from "@nestjs/common";
+import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { BookModel } from "src/book/_business/book.model";
 import { BookServiceImplementation } from "../../_business/book.service.implementation"
 
 import { MyError } from "src/_core/_business/baseError.error";
 import { UpdateBookRequestDto } from "./update-book.dto";
 
-
+@Injectable()
 export class UpdateBookUseCase {
 
     constructor(private readonly bookService:BookServiceImplementation){}
