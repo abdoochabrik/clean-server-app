@@ -65,6 +65,7 @@ export class BookServiceImplementation implements BookServiceInterface  {
     }
     
     public async update(id: string, book: BookModel): Promise<Either<MyError, BookModel>> {
+    
         const foundBook:BookEntity = await this.bookRepository.getEntityById(id)
         if(!foundBook) {
             return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this book',new Date(),`/api/book/${id}`))
@@ -85,5 +86,7 @@ export class BookServiceImplementation implements BookServiceInterface  {
             
         }
     }
+
+    
    
 }
