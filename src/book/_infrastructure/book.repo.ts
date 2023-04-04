@@ -21,9 +21,9 @@ export class BookRepository extends BaseRepository<BookEntity> {
 
     
     public async updateBook(id:string,book:Partial<BookEntity>):Promise<UpdateResult<BookEntity>> {
-        const foundbook = await this.bookRepository.findOne({ where: { 'id' : id }})
         const updateResult = await this.bookRepository.update(id,{...book});
         const {affected}=updateResult
+        const foundbook = await this.bookRepository.findOne({ where: { 'id' : id }})
         const result = new UpdateResult<BookEntity>(affected,[foundbook])
         return result;
      }
