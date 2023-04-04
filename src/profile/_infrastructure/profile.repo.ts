@@ -15,8 +15,8 @@ export class ProfileRepository extends BaseRepository<ProfileEntity> {
 
     public async updateProfile(id:string,profile:Partial<ProfileEntity>):Promise<UpdateResult<ProfileEntity>> {
         const updateResult = await this.profileRepository.update(id,{...profile});
-        const foundProfile = await this.profileRepository.findOne({ where: { 'id' : id }})
         const {affected}=updateResult
+        const foundProfile = await this.profileRepository.findOne({ where: { 'id' : id }})
         const result = new UpdateResult<ProfileEntity>(affected,[foundProfile])
         return result;
      }
