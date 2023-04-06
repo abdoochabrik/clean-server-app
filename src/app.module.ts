@@ -8,6 +8,7 @@ import { ProfileModule } from './profile/profile.module';
 import { ProfileEntity } from './profile/_infrastructure/profile.entity';
 import { BookModule } from './book/book.module';
 import { BookEntity } from './book/_infrastructure/book.entity';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -28,7 +29,7 @@ import { BookEntity } from './book/_infrastructure/book.entity';
         ],
         synchronize: true
       })
-    }),UserModule, ProfileModule, BookModule],
+    }),UserModule, ProfileModule, BookModule, AuthenticationModule],
   providers: []
 })
 export class AppModule {}
