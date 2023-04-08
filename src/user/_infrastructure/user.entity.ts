@@ -6,8 +6,8 @@ import {
 import { UserModel } from '../_business/user.model';
 import { ProfileEntity } from '../../profile/_infrastructure/profile.entity';
 
-@Entity({ name: 'user' })
-@Unique(['email','username'])
+@Entity({ name: 'user_Info' })
+@Unique(['email'])
 export class UserEntity extends BaseEntity implements UserModel{
 
   @Column({ type: 'varchar', length: 10,unique: true })
@@ -18,10 +18,13 @@ export class UserEntity extends BaseEntity implements UserModel{
   email?: string;
 
   @Column({ type: 'varchar', length: 300 })
-  password?: string;
+  passwordHash?: string;
 
   @Column({ type: 'boolean', default:false })
   isConnected?:boolean;
+
+  @Column({ type: 'varchar'})
+  passwordSalt?:boolean;
 
   @OneToMany(() => ProfileEntity, (profile) => profile.user,  { 
     onDelete: 'CASCADE' 
