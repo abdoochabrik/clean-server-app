@@ -21,6 +21,7 @@ export class UserController {
 
   @Post()
   async createUser(@Body() user:CreateUserRequestDto ):Promise<MyError | UserModel> {
+    console.log(user)
     return  await  this.createUserUseCase.createUser(user)
   }
 

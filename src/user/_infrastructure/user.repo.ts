@@ -26,4 +26,8 @@ export class UserRepository extends BaseRepository<UserEntity>{
     },})
   }
 
+  public async createQueryBuilder() {
+    return await this.userRepository.createQueryBuilder("user")
+  }
+
 }  

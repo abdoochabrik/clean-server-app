@@ -18,13 +18,13 @@ export class UserEntity extends BaseEntity implements UserModel{
   email?: string;
 
   @Column({ type: 'varchar', length: 300 })
-  passwordHash?: string;
+  password?: string;
 
   @Column({ type: 'boolean', default:false })
   isConnected?:boolean;
 
-  @Column({ type: 'varchar'})
-  passwordSalt?:boolean;
+ /* @Column({ type: 'varchar'})
+  passwordSalt?:boolean;*/
 
   @OneToMany(() => ProfileEntity, (profile) => profile.user,  { 
     onDelete: 'CASCADE' 
