@@ -90,5 +90,20 @@ export class UserServiceImpl implements UserServiceInterface {
           
           } 
 
+     async getUserByEmail(email:string):Promise<Either<UserModel,MyError>> {
+       try {
+          const user:UserModel = await (await this.userRepository.createQueryBuilder())
+                                    .where("user.email = :email",{email:email})
+                                    .getOne()
+          if(user) {
+            return left(user)
+          }
+          else {
+            return right(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this user',new Date(),`/api/user`))
+         }
+       } catch (error) {
+        return right(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+       }
+     }     
 }
 

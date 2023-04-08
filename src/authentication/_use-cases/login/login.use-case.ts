@@ -1,15 +1,15 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { UserModel } from "../../../user/_business/user.model";
 import { MyError } from "../../../_core/_business/baseError.error";
-import { authenticationService } from "src/authentication/_business/authetication.service";
+import { authenticationService } from "../../_business/authetication.service";
 
 @Injectable()
 export class loginUseCase {
  
     constructor(private readonly authenticationService:authenticationService){}
 
-    public async login(username:string,password:string):Promise<UserModel | MyError> {
-         const result = await this.authenticationService.getUserByUsername(username,password)
+    public async login(email:string):Promise<UserModel | MyError> {
+         const result = await this.authenticationService.getUserByEmail(email);
          if(result.isLeft()) {
             return result.value
          }
