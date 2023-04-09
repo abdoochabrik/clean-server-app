@@ -1,5 +1,6 @@
 
-import { Controller, Get,Post,Body,Patch, ParseUUIDPipe,Param, Delete} from '@nestjs/common'
+import { Controller, Get,Post,Body,Patch, ParseUUIDPipe,Param, Delete, UseGuards} from '@nestjs/common'
+import { authenticationGuard } from '../../authentication/_business/authentication.guard';
 import { MyError } from '..//../_core/_business/baseError.error';
 import { ProfileModel } from '../_business/profile.model';
 import { CreateProfileUseCase } from './add_profile/add_profile.use-case';
@@ -9,7 +10,7 @@ import { GetProfileByIdUseCase } from './get_profile_by_id/get-profile-by-id.use
 import { PaginateProfilesUseCase } from './paginate_profiles/paginate_profiles.use-case';
 import { UpdateProfilesUseCase } from './update_profile/update_profile.use-case';
 import { UpdateProfileRequestDto } from './update_profile/update_profile_request_dto';
-
+@UseGuards(authenticationGuard)
 @Controller('/profile')
 export class ProfileController {
 

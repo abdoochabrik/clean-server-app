@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { Global } from '@nestjs/common/decorators/modules/global.decorator';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { authenticationGuard } from '../authentication/_business/authentication.guard';
 import { UserServiceImpl } from '../user/_business/user.service.implementation';
 import { GetUserByIdUseCase } from '../user/_use-cases/get_user/get_user.use-case';
 import { CoreModule } from '../_core/core.module';
@@ -32,7 +33,8 @@ import { UpdateProfilesUseCase } from './_use-cases/update_profile/update_profil
               PaginateProfilesUseCase,
               DeleteProfileUseCase,
               GetUserByIdUseCase,
-              UserServiceImpl],
+              UserServiceImpl,
+              authenticationGuard],
     exports: [ProfileRepository,GetProfileByIdUseCase,ProfileServiceImpl],
 }
 )

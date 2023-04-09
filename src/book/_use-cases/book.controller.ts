@@ -1,5 +1,7 @@
 
 import { Controller, Get,Post,Body,Patch, ParseUUIDPipe,Param, Delete} from '@nestjs/common'
+import { UseGuards } from '@nestjs/common/decorators';
+import { authenticationGuard } from '../../authentication/_business/authentication.guard';
 import { CreateBookUseCase } from './add_book/add-book.use-case';
 import { CreateBookRequestDto } from './add_book/create-book-request.dto';
 import { DeleteBookUseCase } from './delete_book/delete-book.use-case';
@@ -8,7 +10,7 @@ import { PaginateBooksUseCase } from './paginate_books/paginate-books.use-case';
 import { UpdateBookRequestDto } from './update_book/update-book.dto';
 import { UpdateBookUseCase } from './update_book/update-book.use-case';
 
-
+@UseGuards(authenticationGuard)
 @Controller('/book')
 export class BookController {
 
