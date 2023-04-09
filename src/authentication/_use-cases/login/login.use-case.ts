@@ -1,22 +1,28 @@
 import { Injectable, InternalServerErrorException, NotFoundException,UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt/dist";
 import { UserModel } from "../../../user/_business/user.model";
 import { MyError } from "../../../_core/_business/baseError.error";
 import { authenticationService } from "../../_business/authetication.service";
 import { loginRequestDto } from "./login-request.dto";
+import { loginResponseDto } from "./login-response.dto";
 
 @Injectable()
 export class loginUseCase {
  
-    constructor(private readonly authenticationService:authenticationService){}
+    constructor(private readonly authenticationService:authenticationService,
+                private readonly jwtService: JwtService){}
 
-    public async login(userInfo:loginRequestDto):Promise<UserModel | MyError> {
+    public async login(userInfo:loginRequestDto):Promise<loginResponseDto | MyError> {
          const result = await this.authenticationService.getUserByEmail(userInfo.email,userInfo.password);
          if(result.isLeft()) {
             const {password, ...rest} = result.value
             if(password != userInfo.password){
                 throw new UnauthorizedException();
             }
-            return rest
+            const payload = { username: rest.username, sub: rest.id };
+            const  access_token = await this.jwtService.signAsync(payload);
+            const response = new loginResponseDto(rest,access_token);
+            return response
          }
          else if(result.isRight()){
             switch(result.value.code) {

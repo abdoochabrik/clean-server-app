@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from "@nestjs/common";
-import { UserModel } from "../..//user/_business/user.model";
 import { MyError } from "../../_core/_business/baseError.error";
 import { loginRequestDto } from "./login/login-request.dto";
+import { loginResponseDto } from "./login/login-response.dto";
 import { loginUseCase } from "./login/login.use-case";
 
 
@@ -13,7 +13,7 @@ export class AuthenticationController {
     }
 
     @Post('/login')
-    public async login(@Body() userInfo:loginRequestDto ):Promise<UserModel | MyError> {
+    public async login(@Body() userInfo:loginRequestDto ):Promise<loginResponseDto | MyError> {
         return await this.loginUseCase.login(userInfo);
     }
 
