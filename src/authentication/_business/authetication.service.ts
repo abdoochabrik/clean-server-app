@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { UserModel } from "../..//user/_business/user.model";
 import { UserServiceImpl } from "../../user/_business/user.service.implementation";
 import { Either, MyError } from "../../_core/_business/baseError.error";
