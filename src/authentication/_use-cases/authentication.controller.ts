@@ -14,7 +14,7 @@ export class AuthenticationController {
 
     @Post('/login')
     public async login(@Body() userInfo:loginRequestDto ):Promise<UserModel | MyError> {
-        return await this.loginUseCase.login(userInfo.email);
+        return await this.loginUseCase.login(userInfo);
     }
 
 }

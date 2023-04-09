@@ -3,5 +3,5 @@ import { Either, MyError } from "../../_core/_business/baseError.error";
 
 
 export interface authenticationServiceAbstraction {
-   getUserByEmail(email:string):Promise<Either<UserModel,MyError>>
+   getUserByEmail(email:string,password:string):Promise<Either<UserModel,MyError>>
 }

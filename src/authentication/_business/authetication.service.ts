@@ -11,7 +11,7 @@ export class authenticationService implements authenticationServiceAbstraction {
     constructor(private readonly userService:UserServiceImpl){
 
     }
-    async getUserByEmail(email: string): Promise<Either<UserModel, MyError>> {
+    async getUserByEmail(email: string,password:string): Promise<Either<UserModel, MyError>> {
         return await this.userService.getUserByEmail(email);
     }
 
