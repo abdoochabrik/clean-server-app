@@ -10,7 +10,11 @@ export class RoleRepository extends BaseRepository<RoleEntity> {
 
 
     constructor( @InjectRepository(RoleEntity)
-    private readonly profileRepository: Repository<RoleEntity>){
-        super(profileRepository)
+    private readonly roleRepository: Repository<RoleEntity>){
+        super(roleRepository)
+    }
+
+    public async createQueryBuilder() {
+        return await this.roleRepository.createQueryBuilder("role")
     }
 }
