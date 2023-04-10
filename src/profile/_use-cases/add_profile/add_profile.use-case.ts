@@ -13,7 +13,6 @@ export class CreateProfileUseCase{
     public async createUser(userId:string,profile:CreateProfileRequestDto): Promise<MyError | ProfileModel> {
 
         const user:UserModel = await this.getUserUseCase.getUserById(userId) as UserModel
-        console.log('user',user)
 
         const profileToCreate:ProfileModel = {
             livesIn: profile.livesIn,
