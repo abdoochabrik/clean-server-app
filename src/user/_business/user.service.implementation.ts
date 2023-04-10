@@ -94,6 +94,7 @@ export class UserServiceImpl implements UserServiceInterface {
        try {
           const user:UserModel = await (await this.userRepository.createQueryBuilder())
                                     .where("user.email = :email",{email:email})
+                                    .leftJoinAndSelect('user.role','role')
                                     .getOne()
           if(user) {
             return left(user)

@@ -23,6 +23,7 @@ export class UserRepository extends BaseRepository<UserEntity>{
    public async getEntityById(entityId: string): Promise<UserEntity | null> {
     return await this.userRepository.findOne({where : { 'id': entityId}, relations: {
         profiles: true,
+        role:true
     },})
   }
 
