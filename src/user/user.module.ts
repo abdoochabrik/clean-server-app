@@ -11,6 +11,7 @@ import { DeleteUserUseCase } from './_use-cases/delete_user/delete_user.use-case
 import { GetUserByIdUseCase } from './_use-cases/get_user/get_user.use-case';
 import { PaginateUsersUseCase } from './_use-cases/paginate_users/paginate_users.use-case';
 import { UpdateUserUseCase } from './_use-cases/update_user/update_user.use-case';
+import { GetRoleByTypeUseCase } from '../role/_use-cases/get-role-by-type/get-Role-By-Type.use-case';
 @Global()
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import { UpdateUserUseCase } from './_use-cases/update_user/update_user.use-case
               DeleteUserUseCase,
               PaginateUsersUseCase,
               GetUserByIdUseCase,
-              UpdateUserUseCase],
+              UpdateUserUseCase,
+             ],
   exports: [GetUserByIdUseCase, UserServiceImpl,UserRepository],
 })
 export class UserModule {}

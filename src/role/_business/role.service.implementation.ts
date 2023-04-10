@@ -1,6 +1,7 @@
 import { HttpStatus, Injectable } from "@nestjs/common";
 import { Either, left, MyError, right } from "../../_core/_business/baseError.error";
 import { RoleRepository } from "../_infrastructure/role.repo";
+import { Role } from "./role.enum";
 import { RoleModel } from "./role.model";
 import { RoleServiceInterface } from "./role.service.abstraction";
 
@@ -38,6 +39,23 @@ export class RoleServiceImpl implements RoleServiceInterface {
     }
     update(id: string, R: RoleModel): Promise<Either<MyError, RoleModel>> {
         throw new Error("Method not implemented.");
+    }
+
+    public async getRoleByType(roleType:Role):Promise<Either<MyError,RoleModel>> {
+       try {
+           const result = await (await this.roleRepository.createQueryBuilder())
+                                 .where("role.role = :role",{role:roleType}).getOne();
+            if(result){
+                return right(result);  
+            }
+            else {
+                return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this role',new Date(),`/api/role`))
+            }                     
+                               
+       } catch (error) {
+        return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+
+       }
     }
     
 }
