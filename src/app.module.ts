@@ -9,6 +9,8 @@ import { ProfileEntity } from './profile/_infrastructure/profile.entity';
 import { BookModule } from './book/book.module';
 import { BookEntity } from './book/_infrastructure/book.entity';
 import { AuthenticationModule } from './authentication/authentication.module';
+import { RoleModule } from './role/role.module';
+import { RoleEntity } from './role/_infrastructure/role.entity';
 
 @Module({
   imports: [
@@ -25,11 +27,12 @@ import { AuthenticationModule } from './authentication/authentication.module';
         entities: [
           UserEntity,
           ProfileEntity,
-          BookEntity
+          BookEntity,
+          RoleEntity
         ],
         synchronize: true
       })
-    }),UserModule, ProfileModule, BookModule, AuthenticationModule],
+    }),UserModule, ProfileModule, BookModule, AuthenticationModule, RoleModule],
   providers: []
 })
 export class AppModule {}
