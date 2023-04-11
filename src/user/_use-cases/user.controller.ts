@@ -1,8 +1,10 @@
 import { Controller, Get,Post,Body, ParseUUIDPipe,Param, UsePipes, ValidationPipe, Patch,} from '@nestjs/common'
-import { Delete } from '@nestjs/common/decorators'
-import { MyError } from 'src/_core/_business/baseError.error'
+import { Delete, UseGuards } from '@nestjs/common/decorators'
+import { RolesGuard } from '../../role/_business/roles.guard'
+import { Role } from '../../role/_business/role.enum'
+import { Roles } from '../../role/_business/roles.decorator'
+import { MyError } from '../../_core/_business/baseError.error'
 import { UserModel } from '../_business/user.model'
-import { UserServiceImpl } from '../_business/user.service.implementation'
 import { CreateUserUseCase } from './add_user/add_user.use-case'
 import { CreateUserRequestDto } from './add_user/create-user-request.dto'
 import { DeleteUserUseCase } from './delete_user/delete_user.use-case'
@@ -19,27 +21,38 @@ export class UserController {
               private readonly updateUserUseCase:UpdateUserUseCase,
               private readonly paginateUsersUseCase:PaginateUsersUseCase) {}
 
+  @Roles(Role.Admin,Role.Author,Role.Customer)
+  @UseGuards(RolesGuard)            
   @Post()
   async createUser(@Body() user:CreateUserRequestDto ):Promise<MyError | UserModel> {
     console.log(user)
     return  await  this.createUserUseCase.createUser(user)
   }
 
+
+  @Roles(Role.Admin,Role.Author,Role.Customer)
+  @UseGuards(RolesGuard) 
   @Delete(':id')
   async deleteUser(@Param('id',ParseUUIDPipe) userId:string):Promise<MyError | boolean> {
     return  await  this.deleteUserUseCase.deleteUser(userId)
   }
 
+  @Roles(Role.Admin,Role.Author,Role.Customer)
+  @UseGuards(RolesGuard) 
   @Get(':id')
   async getUserById(@Param('id',ParseUUIDPipe) userId:string) : Promise<MyError | UserModel> {
       return await this.getUserByIdUseCase.getUserById(userId);
   }
 
+  @Roles(Role.Admin,Role.Author,Role.Customer)
+  @UseGuards(RolesGuard) 
   @Get()
   async getUsers(): Promise<MyError | UserModel[]> {
       return await this.paginateUsersUseCase.paginateUsers()
   }
 
+  @Roles(Role.Admin,Role.Author,Role.Customer)
+  @UseGuards(RolesGuard) 
   @Patch(':id')
   async updateUser(@Param('id',ParseUUIDPipe) userId:string, @Body()  user:UpdateUserRequestDto): Promise<MyError | UserModel> {
       return await this.updateUserUseCase.updateUser(userId,user)
