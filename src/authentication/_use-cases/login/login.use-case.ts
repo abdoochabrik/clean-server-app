@@ -19,7 +19,7 @@ export class loginUseCase {
             if(password != userInfo.password){
                 throw new UnauthorizedException();
             }
-            const payload = { username: rest.username, sub: rest.id };
+            const payload = { username: rest.username, sub: rest.id,role:rest.role };
             const  access_token = await this.jwtService.signAsync(payload);
             const response = new loginResponseDto(rest,access_token);
             return response
