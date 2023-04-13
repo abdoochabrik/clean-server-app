@@ -11,6 +11,7 @@ import { BookEntity } from './book/_infrastructure/book.entity';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { RoleModule } from './role/role.module';
 import { RoleEntity } from './role/_infrastructure/role.entity';
+import { DatabaseFileModule } from './database-file/database-file.module';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { RoleEntity } from './role/_infrastructure/role.entity';
         ],
         synchronize: true
       })
-    }),UserModule, ProfileModule, BookModule, AuthenticationModule, RoleModule],
+    }),UserModule, ProfileModule, BookModule, AuthenticationModule, RoleModule, DatabaseFileModule],
   providers: []
 })
 export class AppModule {}
