@@ -24,8 +24,8 @@ export class BookController {
 
     @Roles(Role.Admin,Role.Author)
     @UseGuards(RolesGuard)
-    @Post(':bookId')
-    async createBook(@Param('bookId',ParseUUIDPipe) profileId:string,@Body() book:CreateBookRequestDto) {
+    @Post(':profileId')
+    async createBook(@Param('profileId',ParseUUIDPipe) profileId:string,@Body() book:CreateBookRequestDto) {
         return  await this.createBookUseCase.createBook(profileId,book)
     }
 

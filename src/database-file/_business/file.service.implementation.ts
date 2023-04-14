@@ -28,8 +28,20 @@ export class FileServiceImplementation implements FileServiceInterface {
     deleteById(id: string): Promise<Either<MyError, boolean>> {
         throw new Error("Method not implemented.");
     }
-    getById(id: string): Promise<Either<MyError, FileModel>> {
-        throw new Error("Method not implemented.");
+   
+    async getById(id: string): Promise<Either<MyError, FileModel>> {
+        try {
+            const file:FileModel = await this.fileRepository.getFileById(id);
+            if(file) {
+                return right(file)
+            }
+            else {
+                return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this book',new Date(),`/api/book/${id}`))
+            }
+        } catch (error) {
+            return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level'))
+        }
+   
     }
     getAll(): Promise<Either<MyError, FileModel[]>> {
         throw new Error("Method not implemented.");
