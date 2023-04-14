@@ -1,11 +1,12 @@
 import { BaseEntity } from '../../_core/_infrastructure/base.entity';
-import { Entity, Column,Unique, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column,Unique, OneToMany, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
 import {
   IsEmail,
 } from "class-validator"
 import { UserModel } from '../_business/user.model';
 import { ProfileEntity } from '../../profile/_infrastructure/profile.entity';
 import { RoleEntity } from '../../role/_infrastructure/role.entity';
+import FileEntity from '../../database-file/_infrastructure/file.entity';
 
 @Entity({ name: 'user_Info' })
 @Unique(['email'])
@@ -36,4 +37,13 @@ export class UserEntity extends BaseEntity implements UserModel{
     onDelete: 'CASCADE' 
   })
   role?:RoleEntity
+
+  @JoinColumn({ name: 'imageId' })
+  @OneToOne(
+    () =>FileEntity,
+    {
+      nullable: true
+    }
+  )
+  image?: FileEntity;
 }
