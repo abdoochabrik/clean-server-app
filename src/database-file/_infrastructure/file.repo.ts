@@ -27,5 +27,8 @@ export default class fileRepository extends BaseRepository<FileEntity> {
         return result;
      }
 
+    public async getFileById(id:string): Promise<FileEntity>{ 
+     return await this.fileRepository.findOne({where : { 'id': id}}) 
+    } 
 
 }
