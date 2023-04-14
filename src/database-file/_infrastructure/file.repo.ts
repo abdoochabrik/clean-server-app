@@ -14,6 +14,11 @@ export default class fileRepository extends BaseRepository<FileEntity> {
  
     }
 
+    public async uploadFile(imageBuffer:Buffer, filename:string) : Promise<FileEntity> {
+        const newFile = await this.fileRepository.save({filename,data:imageBuffer});
+        return newFile
+    }
+
     public async updateFile(id:string,file:Partial<FileEntity>):Promise<UpdateResult<FileEntity>> {
         const updateResult = await this.fileRepository.update(id,{...file});
         const {affected}=updateResult

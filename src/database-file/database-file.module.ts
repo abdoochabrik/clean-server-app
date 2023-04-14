@@ -4,6 +4,8 @@ import { CoreModule } from './../_core/core.module';
 import {FileServiceImplementation } from './_business/file.service.implementation';
 import FileEntity from './_infrastructure/file.entity';
 import fileRepository from './_infrastructure/file.repo';
+import { CreateFileUseCase } from './_use-cases/add-file/add-file.use-case';
+import { FileController } from './_use-cases/file.controller';
 
 @Global()
 @Module({
@@ -14,7 +16,7 @@ import fileRepository from './_infrastructure/file.repo';
           FileEntity
         ]),
       ],
-    controllers:[],
-    providers:[FileServiceImplementation,fileRepository]  
+    controllers:[FileController],
+    providers:[FileServiceImplementation,fileRepository,CreateFileUseCase]  
 })
 export class DatabaseFileModule {}

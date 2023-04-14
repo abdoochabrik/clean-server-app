@@ -1,5 +1,5 @@
 import { BaseEntity } from '../../_core/_infrastructure/base.entity';
-import { Column, Entity, OneToOne} from 'typeorm';
+import { Column, Entity} from 'typeorm';
  
 @Entity("file")
 class FileEntity extends BaseEntity {
