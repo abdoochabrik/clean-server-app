@@ -12,6 +12,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { RoleModule } from './role/role.module';
 import { RoleEntity } from './role/_infrastructure/role.entity';
 import { DatabaseFileModule } from './database-file/database-file.module';
+import FileEntity from './database-file/_infrastructure/file.entity';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { DatabaseFileModule } from './database-file/database-file.module';
           UserEntity,
           ProfileEntity,
           BookEntity,
-          RoleEntity
+          RoleEntity,
+          FileEntity
         ],
         synchronize: true
       })
