@@ -16,6 +16,7 @@ export class BookRepository extends BaseRepository<BookEntity> {
     public async getEntityById(entityId: string): Promise<BookEntity | null> {
         return await this.bookRepository.findOne({where : { 'id': entityId}, relations: {
             profile: true,
+            image:true
         },})
     }
 
