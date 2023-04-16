@@ -18,6 +18,7 @@ import { GetFileByIdUseCase } from './_use-cases/get-file-by-id/get-file-by-id.u
         ]),
       ],
     controllers:[FileController],
-    providers:[FileServiceImplementation,fileRepository,CreateFileUseCase,GetFileByIdUseCase]  
+    providers:[FileServiceImplementation,fileRepository,CreateFileUseCase,GetFileByIdUseCase], 
+    exports:[FileServiceImplementation,fileRepository,CreateFileUseCase] 
 })
 export class DatabaseFileModule {}

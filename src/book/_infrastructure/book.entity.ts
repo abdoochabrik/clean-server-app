@@ -19,13 +19,11 @@ export class BookEntity extends BaseEntity implements BookModel{
   @ManyToOne(() => ProfileEntity, (profile) => profile.books)
   profile?: ProfileEntity;
 
-  @JoinColumn({ name: 'imageId' })
+  
   @OneToOne(
     () =>FileEntity,
-    {
-      nullable: true
-    }
   )
+  @JoinColumn()
   image?: FileEntity;
 
   @JoinColumn({ name: 'pdfId' })
