@@ -16,7 +16,7 @@ export class RoleController {
     constructor(private readonly createRoleUseCase:CreateRoleUseCase){}
 
     @Roles(Role.Admin)
-    @UseGuards(RolesGuard)
+    //@UseGuards(RolesGuard)
     @Post('')
     public async createRole(@Body() role:CreateRoleRequestDto):Promise<MyError | RoleModel> {
         return await this.createRoleUseCase.createRole(role);

@@ -1,4 +1,4 @@
-import { Controller, Get,Post,Body, ParseUUIDPipe,Param, UsePipes, ValidationPipe, Patch,} from '@nestjs/common'
+import { Controller, Get,Post,Body, ParseUUIDPipe,Param, Patch,} from '@nestjs/common'
 import { Delete, UseGuards } from '@nestjs/common/decorators'
 import { RolesGuard } from '../../role/_business/roles.guard'
 import { Role } from '../../role/_business/role.enum'
@@ -21,11 +21,10 @@ export class UserController {
               private readonly updateUserUseCase:UpdateUserUseCase,
               private readonly paginateUsersUseCase:PaginateUsersUseCase) {}
 
-  @Roles(Role.Admin,Role.Author,Role.Customer)
-  @UseGuards(RolesGuard)            
+  //@Roles(Role.Admin,Role.Author,Role.Customer)
+  //@UseGuards(RolesGuard)            
   @Post()
   async createUser(@Body() user:CreateUserRequestDto ):Promise<MyError | UserModel> {
-    console.log(user)
     return  await  this.createUserUseCase.createUser(user)
   }
 
@@ -37,8 +36,8 @@ export class UserController {
     return  await  this.deleteUserUseCase.deleteUser(userId)
   }
 
-  @Roles(Role.Admin,Role.Author,Role.Customer)
-  @UseGuards(RolesGuard) 
+  //@Roles(Role.Admin,Role.Author,Role.Customer)
+  //@UseGuards(RolesGuard) 
   @Get(':id')
   async getUserById(@Param('id',ParseUUIDPipe) userId:string) : Promise<MyError | UserModel> {
       return await this.getUserByIdUseCase.getUserById(userId);

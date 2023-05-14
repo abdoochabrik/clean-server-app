@@ -18,6 +18,7 @@ export class CreateUserUseCase{
         const userToCreate = {...userdata, "role":roleFromDb}
 
         const result =  await this.userService.create(userToCreate)
+        console.log('res',result)
         if(result.isRight()){
             return result.value
         }

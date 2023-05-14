@@ -14,6 +14,8 @@ export class FileServiceImplementation implements FileServiceInterface {
 
     public async createFile(image:Buffer,filename:string): Promise<Either<MyError, FileModel>> {
         try {
+            console.log('api files',image )
+            console.log('api files',filename )
             const createdFile = await this.fileRepository.uploadFile(image,filename)
             return right(createdFile)
         } catch (error) {

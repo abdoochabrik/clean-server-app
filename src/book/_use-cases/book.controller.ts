@@ -1,5 +1,5 @@
 
-import { Controller, Get,Post,Body,Patch, ParseUUIDPipe,Param, Delete} from '@nestjs/common'
+import { Controller, Get,Post,Body,Patch, ParseUUIDPipe,Param, Delete,UseInterceptors, UploadedFile} from '@nestjs/common'
 import { UseGuards } from '@nestjs/common/decorators';
 import { Role } from '../../role/_business/role.enum';
 import { Roles } from '../../role/_business/roles.decorator';
@@ -12,6 +12,9 @@ import { PaginateBooksUseCase } from './paginate_books/paginate-books.use-case';
 import { UpdateBookRequestDto } from './update_book/update-book.dto';
 import { UpdateBookUseCase } from './update_book/update-book.use-case';
 import { RolesGuard } from '../../role/_business/roles.guard';
+import { Multer } from "multer";
+import { FileInterceptor } from '@nestjs/platform-express';
+import { BookModel } from '../_business/book.model';
 @UseGuards(authenticationGuard)
 @Controller('/book')
 export class BookController {
@@ -25,8 +28,17 @@ export class BookController {
     @Roles(Role.Admin,Role.Author)
     @UseGuards(RolesGuard)
     @Post(':profileId')
-    async createBook(@Param('profileId',ParseUUIDPipe) profileId:string,@Body() book:CreateBookRequestDto) {
-        return  await this.createBookUseCase.createBook(profileId,book)
+    @UseInterceptors(FileInterceptor('file'))
+    async createBook(@UploadedFile() file:Multer.File,
+                     @Param('profileId',ParseUUIDPipe) profileId:string,
+                     @Body() book:any,
+                     ) {    
+                     const bookToCreate = {
+                        name: book.name.toString(),
+                        nbrPage:parseInt(book.nbrPage),
+                        price:parseInt(book.price),
+                     }
+        return  await this.createBookUseCase.createBook(profileId,bookToCreate,file)
     }
 
     @Roles(Role.Admin,Role.Author)

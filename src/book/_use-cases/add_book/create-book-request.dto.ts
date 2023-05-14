@@ -8,10 +8,10 @@ export class CreateBookRequestDto {
     name:string;
 
     @IsNotEmpty()
-    @IsNumber()
+    //@IsNumber()
     nbrPage:number;
     @IsNotEmpty()
-    @IsNumber()
+    //@IsNumber()
     price:number;
 
 }
