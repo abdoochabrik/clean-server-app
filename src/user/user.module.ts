@@ -23,7 +23,7 @@ import { GetRoleByTypeUseCase } from '../role/_use-cases/get-role-by-type/get-Ro
   controllers: [UserController],
   providers: [UserServiceImpl,
               UserRepository,
-              CreateUserUseCase,
+              CreateUserUseCase, 
               DeleteUserUseCase,
               PaginateUsersUseCase,
               GetUserByIdUseCase,

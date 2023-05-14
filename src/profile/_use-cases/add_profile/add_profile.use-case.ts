@@ -21,6 +21,7 @@ export class CreateProfileUseCase{
         }
 
         const result =  await this.profileService.create(profileToCreate);
+        console.log('res',result)
         if(result.isRight()){
             return result.value
         }
