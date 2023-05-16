@@ -15,7 +15,7 @@ import { RolesGuard } from '../../role/_business/roles.guard';
 import { Multer } from "multer";
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BookModel } from '../_business/book.model';
-@UseGuards(authenticationGuard)
+//@UseGuards(authenticationGuard)
 @Controller('/book')
 export class BookController {
 
@@ -61,7 +61,7 @@ export class BookController {
         return  await this.getBookByIdUseCase.getBookById(bookId)
     }
 
-    @Roles(Role.Admin,Role.Author)
+    @Roles(Role.Author)
     @UseGuards(RolesGuard)
     @Patch(':bookId')
     async updateBook(@Param('bookId',ParseUUIDPipe) bookId:string,@Body() book:UpdateBookRequestDto) {
