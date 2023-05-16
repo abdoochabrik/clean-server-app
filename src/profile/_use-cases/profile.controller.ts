@@ -23,7 +23,7 @@ export class ProfileController {
                 private readonly updateProfileUseCase:UpdateProfilesUseCase,
                 private readonly getProfileByIdUseCase:GetProfileByIdUseCase){}
 
-    @Roles(Role.Admin,Role.Author)
+    @Roles(Role.Author)
     @UseGuards(RolesGuard)             
     @Post(':id')
     public async createProfile(@Param('id',ParseUUIDPipe) userId:string, @Body() profile:CreateProfileRequestDto) : Promise<MyError | ProfileModel> {
@@ -51,7 +51,7 @@ export class ProfileController {
         return await this.getProfileByIdUseCase.getProfileById(profileId);
     }
 
-    @Roles(Role.Admin,Role.Author)
+    @Roles(Role.Author)
     @UseGuards(RolesGuard)   
     @Patch(':id')
     public async updateProfile(@Param('id',ParseUUIDPipe) profileId:string,@Body() profile:UpdateProfileRequestDto) {

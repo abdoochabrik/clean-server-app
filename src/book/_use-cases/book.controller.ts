@@ -25,7 +25,7 @@ export class BookController {
                private readonly getBookByIdUseCase:GetBookByIdUseCase,
                private readonly updateBookUseCase:UpdateBookUseCase) {}
 
-    @Roles(Role.Admin,Role.Author)
+    @Roles(Role.Author)
     @UseGuards(RolesGuard)
     @Post(':profileId')
     @UseInterceptors(FileInterceptor('file'))
@@ -48,13 +48,14 @@ export class BookController {
         return  await this.deleteBookByIdUseCase.deleteBook(bookId)
     }
 
-   
+    @Roles(Role.Admin,Role.Author,Role.Customer)
     @Get('')
     async paginateBooks() {
         return await this.paginateBooksUseCase.paginateBooks();
     }
 
 
+    @Roles(Role.Admin,Role.Author,Role.Customer)
     @Get(':bookId')
     async getBook(@Param('bookId',ParseUUIDPipe) bookId:string) {
         return  await this.getBookByIdUseCase.getBookById(bookId)
