@@ -21,8 +21,8 @@ export class UserController {
               private readonly updateUserUseCase:UpdateUserUseCase,
               private readonly paginateUsersUseCase:PaginateUsersUseCase) {}
 
-  //@Roles(Role.Admin,Role.Author,Role.Customer)
-  //@UseGuards(RolesGuard)            
+  @Roles(Role.Admin,Role.Author,Role.Customer)
+  @UseGuards(RolesGuard)            
   @Post()
   async createUser(@Body() user:CreateUserRequestDto ):Promise<MyError | UserModel> {
     return  await  this.createUserUseCase.createUser(user)
@@ -36,8 +36,8 @@ export class UserController {
     return  await  this.deleteUserUseCase.deleteUser(userId)
   }
 
-  //@Roles(Role.Admin,Role.Author,Role.Customer)
-  //@UseGuards(RolesGuard) 
+  @Roles(Role.Admin,Role.Author,Role.Customer)
+  @UseGuards(RolesGuard) 
   @Get(':id')
   async getUserById(@Param('id',ParseUUIDPipe) userId:string) : Promise<MyError | UserModel> {
       return await this.getUserByIdUseCase.getUserById(userId);

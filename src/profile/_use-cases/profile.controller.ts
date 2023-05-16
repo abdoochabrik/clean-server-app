@@ -13,7 +13,7 @@ import { GetProfileByIdUseCase } from './get_profile_by_id/get-profile-by-id.use
 import { PaginateProfilesUseCase } from './paginate_profiles/paginate_profiles.use-case';
 import { UpdateProfilesUseCase } from './update_profile/update_profile.use-case';
 import { UpdateProfileRequestDto } from './update_profile/update_profile_request_dto';
-@UseGuards(authenticationGuard)
+//@UseGuards(authenticationGuard)
 @Controller('/profile')
 export class ProfileController {
 

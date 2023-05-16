@@ -9,14 +9,12 @@ import { RolesGuard } from "../_business/roles.guard";
 import { CreateRoleRequestDto } from "./add-role/add-role.request.dto";
 import { CreateRoleUseCase } from "./add-role/add-role.use-case";
 
-
-@Injectable()
 @Controller('role')
 export class RoleController {
     constructor(private readonly createRoleUseCase:CreateRoleUseCase){}
 
     @Roles(Role.Admin)
-    //@UseGuards(RolesGuard)
+    @UseGuards(RolesGuard)
     @Post('')
     public async createRole(@Body() role:CreateRoleRequestDto):Promise<MyError | RoleModel> {
         return await this.createRoleUseCase.createRole(role);
