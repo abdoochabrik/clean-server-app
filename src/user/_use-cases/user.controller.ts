@@ -12,7 +12,8 @@ import { GetUserByIdUseCase } from './get_user/get_user.use-case'
 import { PaginateUsersUseCase } from './paginate_users/paginate_users.use-case'
 import { UpdateUserRequestDto } from './update_user/update-user-request.dto'
 import { UpdateUserUseCase } from './update_user/update_user.use-case'
-
+import { apiGateWayGuard } from '../../authentication/_business/apiGateWay.guard'
+@UseGuards(apiGateWayGuard)
 @Controller('/user')
 export class UserController {
   constructor(private readonly createUserUseCase:CreateUserUseCase,

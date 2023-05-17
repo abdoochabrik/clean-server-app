@@ -13,8 +13,9 @@ import { FileFactory } from "../design-patterns/file.factory";
 import { FileStrategy } from "../design-patterns/strategy";
 import { getFileByIdRequestDto } from "./get-file-by-id/get-file.request.dto";
 import { FileType } from "../design-patterns/file.enum";
+import { apiGateWayGuard } from "../../authentication/_business/apiGateWay.guard";
 
-//@UseGuards(authenticationGuard)
+@UseGuards(apiGateWayGuard)
 @Controller('/file')
 export class FileController { 
 

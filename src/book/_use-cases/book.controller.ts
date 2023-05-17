@@ -15,7 +15,8 @@ import { RolesGuard } from '../../role/_business/roles.guard';
 import { Multer } from "multer";
 import { FileInterceptor } from '@nestjs/platform-express';
 import { BookModel } from '../_business/book.model';
-//@UseGuards(authenticationGuard)
+import { apiGateWayGuard } from '../../authentication/_business/apiGateWay.guard';
+@UseGuards(apiGateWayGuard)
 @Controller('/book')
 export class BookController {
 
