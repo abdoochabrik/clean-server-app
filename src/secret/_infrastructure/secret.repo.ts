@@ -12,4 +12,8 @@ export class SecretRepository extends BaseRepository<SecretEntity> {
     private readonly secretRepository: Repository<SecretEntity>){
         super(secretRepository)
     }
+
+    public async createQueryBuilder() {
+        return await this.secretRepository.createQueryBuilder("secret")
+    }
  }
