@@ -16,5 +16,5 @@ export class CreateSecretRequestDto {
         strict: true,
     })
     @IsOptional()
-    expirationDate:string;
+    expirationDate:Date;
 }

@@ -5,5 +5,5 @@ import { SecretType } from "./secret.enum";
 export interface SecretModel extends BaseModel {
     type:SecretType;
     value:string
-    expirationDate:string;
+    expirationDate:Date;
 }

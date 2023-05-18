@@ -4,6 +4,7 @@ import { SecretRepository } from "../_infrastructure/secret.repo";
 import { SecretModel } from "./secret.model";
 import { SecretServiceInterface } from "./secretservice.abstraction";
 import { HttpStatus } from '@nestjs/common';
+import { SecretType } from "./secret.enum";
 
 
 @Injectable()
@@ -36,6 +37,23 @@ export class SecretServiceImpl implements SecretServiceInterface {
     }
     update(id: string, R: SecretModel): Promise<Either<MyError, SecretModel>> {
         throw new Error("Method not implemented.");
+    }
+
+    public async getSecretByType(type:SecretType):Promise<Either<MyError ,SecretModel>>{
+        try {
+            const result = await (await this.secretRepo.createQueryBuilder())
+                                  .where("secret.type = :type",{type:SecretType.API_GATE_WAY_KEY}).getOne();
+             if(result){
+                 return right(result);  
+             }
+             else {
+                 return left(MyError.createError(HttpStatus.NOT_FOUND,'not found','can not found this secret',new Date(),`/api/secret`))
+             }                     
+                                
+        } catch (error) {
+         return left(MyError.createError(HttpStatus.INTERNAL_SERVER_ERROR,'internal problem','unkown problem on the database level',new Date(),`/api/secret`))
+ 
+        }
     }
     
 }

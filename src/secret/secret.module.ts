@@ -7,6 +7,8 @@ import { CreateSecretUseCase } from './_use-cases/add-secret/add-secret.use-case
 import { SecretController } from './_use-cases/secret.controller';
 import { Global } from '@nestjs/common/decorators/modules/global.decorator';
 import { SecretRepository } from './_infrastructure/secret.repo';
+import { GetSecretUseCase } from './_use-cases/get-secret/get-secret.use-case';
+import { ParseEnumPipe } from '@nestjs/common/pipes';
 
 @Global()
 @Module({
@@ -17,11 +19,12 @@ import { SecretRepository } from './_infrastructure/secret.repo';
         ]),
     ],
 
-    controllers: [SecretController],
+    controllers: [SecretController,],
     providers: [
               SecretServiceImpl,
               CreateSecretUseCase,
-              SecretRepository
+              GetSecretUseCase,
+              SecretRepository,
              ],
     exports: [],
 }
