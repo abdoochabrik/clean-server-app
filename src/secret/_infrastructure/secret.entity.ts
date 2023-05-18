@@ -12,7 +12,7 @@ export class SecretEntity extends BaseEntity implements SecretModel{
     @Column({ type: 'varchar', length: 200, nullable:false}) 
     value: string;
 
-    @Column({nullable:false}) 
-    expirationDate: string;
+    @Column({ type: 'date',nullable:false}) 
+    expirationDate: Date;
 
 } 

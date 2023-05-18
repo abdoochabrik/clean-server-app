@@ -15,7 +15,7 @@ export class CreateSecretUseCase {
         const secretToCreate:SecretModel = {
             type:secret.type,
             value:secret.value,
-            expirationDate:secret.expirationDate
+            expirationDate:new Date(secret.expirationDate)
         }
 
         const result =  await this.secretService.create(secretToCreate);
