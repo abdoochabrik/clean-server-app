@@ -12,7 +12,9 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { RoleModule } from './role/role.module';
 import { RoleEntity } from './role/_infrastructure/role.entity';
 import { DatabaseFileModule } from './database-file/database-file.module';
+import { SecretModule } from './secret/secret.module';
 import FileEntity from './database-file/_infrastructure/file.entity';
+import { SecretEntity } from './secret/_infrastructure/secret.entity';
 
 @Module({
   imports: [
@@ -31,11 +33,12 @@ import FileEntity from './database-file/_infrastructure/file.entity';
           ProfileEntity,
           BookEntity,
           RoleEntity,
-          FileEntity
+          FileEntity,
+          SecretEntity
         ],
         synchronize: true
       })
-    }),UserModule, ProfileModule, BookModule, AuthenticationModule, RoleModule, DatabaseFileModule],
+    }),UserModule, ProfileModule, BookModule, AuthenticationModule, RoleModule, DatabaseFileModule, SecretModule],
   providers: []
 })
 export class AppModule {}
