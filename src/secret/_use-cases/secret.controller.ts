@@ -13,6 +13,7 @@ import { GetSecretUseCase } from './get-secret/get-secret.use-case';
 
 @UseGuards(apiGateWayGuard)
 @Roles(Role.Admin)
+
 @UseGuards(RolesGuard) 
 @Controller('/secret')
 export class SecretController {

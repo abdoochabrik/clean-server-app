@@ -26,7 +26,7 @@ import { ParseEnumPipe } from '@nestjs/common/pipes';
               GetSecretUseCase,
               SecretRepository,
              ],
-    exports: [],
+    exports: [SecretServiceImpl, SecretRepository,],
 }
 )
 
