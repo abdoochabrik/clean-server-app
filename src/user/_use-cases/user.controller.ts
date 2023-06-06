@@ -13,7 +13,7 @@ import { PaginateUsersUseCase } from './paginate_users/paginate_users.use-case'
 import { UpdateUserRequestDto } from './update_user/update-user-request.dto'
 import { UpdateUserUseCase } from './update_user/update_user.use-case'
 import { apiGateWayGuard } from '../../authentication/_business/apiGateWay.guard'
-@UseGuards(apiGateWayGuard)
+//@UseGuards(apiGateWayGuard)
 @Controller('/user')
 export class UserController {
   constructor(private readonly createUserUseCase:CreateUserUseCase,
@@ -30,22 +30,22 @@ export class UserController {
   }
 
 
-  @Roles(Role.Admin,Role.Author,Role.Customer)
-  @UseGuards(RolesGuard) 
+  //@Roles(Role.Admin,Role.Author,Role.Customer)
+  //@UseGuards(RolesGuard) 
   @Delete(':id')
   async deleteUser(@Param('id',ParseUUIDPipe) userId:string):Promise<MyError | boolean> {
     return  await  this.deleteUserUseCase.deleteUser(userId)
   }
 
-  @Roles(Role.Admin,Role.Author,Role.Customer)
-  @UseGuards(RolesGuard) 
+  //@Roles(Role.Admin,Role.Author,Role.Customer)
+  //@UseGuards(RolesGuard) 
   @Get(':id')
   async getUserById(@Param('id',ParseUUIDPipe) userId:string) : Promise<MyError | UserModel> {
       return await this.getUserByIdUseCase.getUserById(userId);
   }
 
-  @Roles(Role.Admin,Role.Author,Role.Customer)
-  @UseGuards(RolesGuard) 
+  //@Roles(Role.Admin,Role.Author,Role.Customer)
+  //@UseGuards(RolesGuard) 
   @Get()
   async getUsers(): Promise<MyError | UserModel[]> {
       return await this.paginateUsersUseCase.paginateUsers()
